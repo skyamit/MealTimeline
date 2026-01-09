@@ -1,5 +1,5 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
-import commonStyles from '../../screens/style';
+import commonStyles from '../../theme/style';
 
 type Prop = {
   daysProp: string[];

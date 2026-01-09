@@ -1,14 +1,13 @@
-import { StatusBar, useColorScheme } from 'react-native';
-import {
-  SafeAreaProvider,
-  SafeAreaView,
-} from 'react-native-safe-area-context';
+import { StatusBar, StyleSheet, useColorScheme } from 'react-native';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import HomeScreen from './src/screens/HomeScreen';
 import { useEffect } from 'react';
 import { setupNotifications } from './src/services/notificationSteup';
+import BottomTabs from './src/components/BottomNavigation';
+import { NavigationContainer } from '@react-navigation/native';
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  const isDarkMode: boolean = useColorScheme() === 'dark';
   useEffect(() => {
     async function init() {
       await setupNotifications();
@@ -16,13 +15,28 @@ function App() {
     init();
   }, []);
   return (
+    // <SafeAreaProvider>
+    //   <SafeAreaView style={[isDarkMode ? styles.dark : styles.light, { flex: 1}]}>
+    //     {/* <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+    //     <HomeScreen /> */}
+    //     <BottomTabs />
+    //   </SafeAreaView>
+    // </SafeAreaProvider>
     <SafeAreaProvider>
-      <SafeAreaView style={{ flex: 1, backgroundColor: '#FFFFFF' }}>
-        <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-        <HomeScreen />
-      </SafeAreaView>
+      <NavigationContainer>
+        <BottomTabs />
+      </NavigationContainer>
     </SafeAreaProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  light: {
+    backgroundColor: '#FFFFFF',
+  },
+  dark: {
+    backgroundColor: '#000000',
+  },
+});
 
 export default App;

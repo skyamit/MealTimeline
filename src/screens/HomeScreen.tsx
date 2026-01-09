@@ -1,59 +1,41 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import AlarmScreen from './AlarmScreen';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import commonStyles from '../theme/style';
 
 const HomeScreen: React.FC = () => {
-  const [alarmMenuVisibile, setAlarmMenuVisible] = useState(false);
-  const showHideAlaram = () => {
-    setAlarmMenuVisible(curr => !curr);
-  };
   return (
-    <View style={styles.container}>
-      {alarmMenuVisibile && <AlarmScreen showHideAlaramProp={showHideAlaram} />}
-      <View style={styles.titleDiv}>
-        <View>
-          <Text style={styles.title}>MealTimeline</Text>
-          <Text style={styles.subtitle}>Local • Offline</Text>
+    <SafeAreaView style={{flex : 1}} edges={['top']}>
+      <View style={[styles.container, commonStyles.screenBackground]}>
+        <View style={styles.titleDiv}>
+          <View>
+            <Text style={styles.title}>MealTimeline</Text>
+            <Text style={styles.subtitle}>Local • Offline</Text>
+          </View>
         </View>
-        <View>
-          {!alarmMenuVisibile && (
-            <TouchableOpacity
-              style={styles.actionButton}
-              onPress={showHideAlaram}
-            >
-              <Text style={styles.buttonText}>Create Alarm</Text>
-            </TouchableOpacity>
-          )}
+
+        <View style={styles.card}>
+          <Text style={styles.cardTitle}>🥗 Active Routine</Text>
+          <Text>Name: Intermittent Fasting (16:8)</Text>
+          <Text style={{ marginTop: 8 }}>⏰ Next Meal: 1:30 PM – Lunch</Text>
+
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>View Timeline</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.actions}>
+          <TouchableOpacity style={styles.actionButton}>
+            <Text style={styles.buttonText}>+ Create Routine</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.actionButton}>
+            <Text style={styles.buttonText}>Manage Routines</Text>
+          </TouchableOpacity>
         </View>
       </View>
-
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>🥗 Active Routine</Text>
-        <Text>Name: Intermittent Fasting (16:8)</Text>
-        <Text style={{ marginTop: 8 }}>⏰ Next Meal: 1:30 PM – Lunch</Text>
-
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}>View Timeline</Text>
-        </TouchableOpacity>
-
-        <Text>Count : {alarmMenuVisibile + ''}</Text>
-      </View>
-
-      <View style={styles.actions}>
-        <TouchableOpacity style={styles.actionButton}>
-          <Text style={styles.buttonText}>+ Create Routine</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.actionButton}>
-          <Text style={styles.buttonText}>Manage Routines</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -64,11 +46,12 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: '#FFFFFF',
+    height:'100%'
   },
   titleDiv: {
-    display: 'flex', 
-    flexDirection:'row',
-    justifyContent:'space-between'
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   title: {
     fontSize: 26,

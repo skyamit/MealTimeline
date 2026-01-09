@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Image, Pressable, Alert } from 'react-native';
 import { Alarm } from '../../model/Alarm';
 import AlarmToggle from './AlarmToggle';
-import commonStyles from '../../screens/style';
+import commonStyles from '../../theme/style';
 import { cancelAlarmNotification, getNextAlarmDate } from '../AlarmQueue';
 import { removeAlarmFromStorage } from '../alarmStorage';
 import EntityConstants from '../constants/EntityConstants';
-import AlarmDays from './AlarmDays';
 import AlarmDayView from './AlarmDayView';
 
 type Prop = {
@@ -85,7 +84,7 @@ const AlarmTime = ({
               <Image
                 source={require('../../../assets/delete.png')}
                 style={styles.alarmClock}
-                // resizeMode="contain"
+                resizeMode="contain"
               />
             </Pressable>
           ) : (
@@ -93,7 +92,7 @@ const AlarmTime = ({
               <Image
                 source={require('../../../assets/alarm/alarmClock.png')}
                 style={styles.alarmClock}
-                // resizeMode="contain"
+                resizeMode="contain"
               />
             </Pressable>
           )}

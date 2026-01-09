@@ -1,163 +1,169 @@
-import React, { useEffect, useState } from 'react';
 import {
-  View,
-  Text,
-  TouchableOpacity,
   FlatList,
-  StyleSheet,
-  TextInput,
   Image,
+  StyleSheet,
+  Text,
+  View,
+  Pressable,
 } from 'react-native';
-import DebugToast from '../components/DebugToast';
-import AlarmList from '../components/alarm/AlarmList';
-type Props = {
-  showHideAlaramProp: () => void;
-};
-export default function AlarmScreen({ showHideAlaramProp }: Props) {
-  const [showToast, setShowToast] = useState(false);
-  
+import { useEffect, useState } from 'react';
+import { Alarm } from '../model/Alarm';
+import { loadAlarms, updateAlarmEnabled } from '../components/alarmStorage';
+import commonStyles from '../theme/style';
+import AlarmTime from '../components/alarm/AlarmTime';
+import AlarmForm from '../components/alarm/AlarmForm';
+import { SafeAreaView } from 'react-native-safe-area-context';
+
+const AlarmList: React.FC = () => {
+  const [showAlarmForm, setShowAlarmForm] = useState(false);
+  const [alarms, setAlarms] = useState<Alarm[]>([]);
+  const [updated, setUpdated] = useState(0);
+  useEffect(() => {
+    // cleanAlarm();
+    loadAllAlarms();
+  }, [updated]);
+  const updateAlarmFn = async (id: string, enabled: boolean) => {
+    await updateAlarmEnabled(id, enabled);
+    setAlarms(prev =>
+      prev.map(alarm => (alarm.id === id ? { ...alarm, enabled } : alarm)),
+    );
+    setUpdated(old => old + 1);
+  };
+  const loadAllAlarms = async () => {
+    const allAlarms = await loadAlarms();
+    setAlarms(allAlarms);
+  };
+  const setShowAlarmFormFn = () => {
+    setShowAlarmForm(curr => !curr);
+  };
   return (
-    <View style={styles.overlay}>
-      <View style={styles.popup}>
-        <TouchableOpacity
-          style={styles.closeButton}
-          onPress={() => showHideAlaramProp()}
-        >
-          <Text style={styles.buttonText}>X</Text>
-        </TouchableOpacity>
-        <View style={styles.container}>
-          <AlarmList />
+    <SafeAreaView style={[commonStyles.screenBackground, { flex: 1 }]} edges={['top']}>
+      <View style={[styles.alarmList, ]}>
+        <View style={styles.titleImageView}>
+          <Text style={styles.titleImageDesc}>
+            Set reminders for mealtime or medication.
+          </Text>
+          <Image
+            source={require('../../assets/alarm/alarmTitle.png')}
+            style={styles.alarmTitleImage}
+          />
         </View>
+        {showAlarmForm && (
+          <AlarmForm
+            setShowAlarmFormProp={setShowAlarmFormFn}
+            loadAllAlarmsProp={loadAllAlarms}
+          />
+        )}
+        {!showAlarmForm && (
+          <>
+            <Pressable
+              onPress={setShowAlarmFormFn}
+              style={{ width: '100%', alignItems: 'center' }}
+            >
+              <View style={[commonStyles.card, styles.createAlarm, commonStyles.screenBackground]}>
+                <View style={styles.addAlarmComp}>
+                  <Image
+                    source={require('../../assets/alarm/plus.png')}
+                    style={styles.alarmAddImage}
+                  />
+                  <Text style={styles.addAlarmText}>Add Alarm</Text>
+                </View>
+                <View style={commonStyles.fullHorizontalLine} />
+                <View>
+                  <Text>Create new reminder for meal or medication.</Text>
+                </View>
+              </View>
+            </Pressable>
+            <View style={styles.alarmListScroll}>
+              <FlatList
+                style={styles.alarmListStyle}
+                data={alarms}
+                keyExtractor={item => item.id}
+                renderItem={({ item }) => (
+                  <AlarmTime
+                    loadAllAlarmsProp={loadAllAlarms}
+                    alarmProp={item}
+                    updateAlarmEnabled={updateAlarmFn}
+                  />
+                )}
+              />
+            </View>
+          </>
+        )}
       </View>
-      {showToast && <DebugToast message={'Toast message'} />}
-    </View>
+    </SafeAreaView>
   );
-}
+};
+
+export default AlarmList;
 
 const styles = StyleSheet.create({
-  icon: {
-    width: 15,
-    height: 15,
-    tintColor: '#fff',
-  },
-  alarmIcon: {
-    width: 18,
-    height: 18,
-  },
-  container: {},
-  currentDate: {
-    fontSize: 16,
-    textAlign: 'center',
-    marginBottom: 20,
-    maxHeight: '70%',
-  },
-  label: {
-    fontSize: 14,
-    color: '#555',
-  },
-  selectedTime: {
-    fontSize: 16,
-    marginVertical: 8,
-  },
-  input: {
-    width: '100%',
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 12,
-    marginVertical: 10,
-    color: '#000',
-    backgroundColor: '#fff',
-  },
-  alarmDateUpdate: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  button: {
-    padding: 12,
-    backgroundColor: '#444',
-    borderRadius: 8,
-    marginTop: 10,
-  },
-  addButton: {
-    backgroundColor: '#2196f3',
-  },
-  buttonText: {
-    color: '#fff',
-    textAlign: 'center',
-    fontWeight: '600',
-  },
-  sectionTitle: {
-    fontSize: 18,
-    fontWeight: '600',
-    marginBottom: 10,
-  },
   alarmList: {
-    maxHeight: '70%',
-    overflow: 'scroll',
+    alignItems: 'center',
   },
-  alarmItem: {
+
+  // create alarm -
+  createAlarm: {
+    width: '90%',
+    padding: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
     display: 'flex',
-    justifyContent: 'center',
-    paddingTop: 5,
-    paddingBottom: 5,
-    borderBottomWidth: 1,
-    borderBottomColor: '#ddd',
+    alignItems: 'center',
+    borderWidth: 1,
+    margin: 10,
+    backgroundColor: '#bfd2ffff',
+    borderRadius: 15,
+    borderColor: '#dbdbdbff',
   },
-  alarmContent: {
+  addAlarmComp: {
     display: 'flex',
     flexDirection: 'row',
+    alignContent: 'center',
     alignItems: 'center',
-    gap: 5,
   },
-  alarmText: {
-    fontSize: 15,
-    color: '#818181ff',
+  alarmAddImage: {
+    width: 30,
+    height: 30,
+  },
+  addAlarmText: {
+    fontSize: 18,
+    fontWeight: 600,
+    marginLeft: 8,
+  },
+  // Alarm list
+  alarmListScroll: {
+    width: '100%',
+    alignItems: 'center',
+    flex: 1,
+    // marginBottom: 10,
+  },
+  alarmListStyle: {
+    width: '90%',
+    paddingBottom: '110%',
+  },
+
+  // heading view
+  titleImageView: {
+    width: '100%',
+    height: 180,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  alarmTitleImage: {
+    width: '100%',
+    height: '100%',
+  },
+  titleImageDesc: {
+    position: 'absolute',
+    bottom: 20,
+    zIndex: 9,
+    backgroundColor: '#FFF',
+    paddingLeft: 10,
+    paddingRight: 10,
+    padding: 5,
+    borderRadius: 10,
     fontWeight: 500,
-  },
-  overlay: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    justifyContent: 'center',
-    alignItems: 'center',
-    zIndex: 999,
-  },
-  popup: {
-    width: '95%',
-    // padding: 20,
-    borderRadius: 12,
-    backgroundColor: '#e1e8f8',
-    overflow:'hidden',
-    elevation: 10,
-    height: '90%'
-  },
-  closeButton: {
-    width: 25,
-    height: 25,
-    backgroundColor: 'rgba(0, 0, 0, 0.53)',
-    position: 'absolute',
-    right: 5,
-    top: 5,
-    textAlign: 'center',
-    justifyContent: 'center',
-    borderRadius: 12,
-    zIndex: 100,
-  },
-  deleteButton: {
-    width: 25,
-    height: 25,
-    backgroundColor: 'rgba(97, 97, 97, 0.68)',
-    position: 'absolute',
-    right: 2,
-    top: 32,
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 5,
   },
 });

@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import commonStyles from '../../screens/style';
+import commonStyles from '../../theme/style';
 import AlarmToggle from './AlarmToggle';
 import { useState } from 'react';
 import AlarmDays from './AlarmDays';
@@ -186,6 +186,8 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    paddingTop: 5, 
+    paddingBottom: 2,
     width: '100%',
   },
   input: {
@@ -233,6 +235,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
+    marginTop: 3, 
+  
   },
 
   //saveCance vieww

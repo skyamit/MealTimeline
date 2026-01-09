@@ -11,6 +11,11 @@ import notifee, {
 import { getAlarmById } from './src/components/alarmStorage';
 import { scheduleAlarm } from './src/components/AlarmQueue';
 
+import { enableScreens } from 'react-native-screens';
+
+enableScreens(true);
+
+
 notifee.onBackgroundEvent(async ({ type, detail }) => {
   if (type === EventType.DELIVERED) {
     const alarmId = detail.notification?.id;
@@ -33,5 +38,6 @@ notifee.onForegroundEvent(async ({ type, detail }) => {
     await scheduleAlarm(alarm);
   }
 });
+
 
 AppRegistry.registerComponent(appName, () => App);

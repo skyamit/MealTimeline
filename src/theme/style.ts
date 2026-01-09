@@ -1,5 +1,16 @@
 import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 
+export const colors = {
+  background: '#F5F8FB',
+  card: '#FFFFFF',
+  primary: '#4A90E2',
+  accent: '#E3F2FD',
+  border: '#E0E6ED',
+  textPrimary: '#222222',
+  textSecondary: '#666666',
+  circleBackground: '#c8c8c8ff',
+};
+
 interface CommonStyles {
   card: ViewStyle;
   inputCard:ViewStyle;
@@ -8,11 +19,12 @@ interface CommonStyles {
   label: TextStyle;
   circle: ViewStyle;
   smallCircle: ViewStyle;
+  screenBackground: ViewStyle;
 }
 
 const commonStyles = StyleSheet.create<CommonStyles>({
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: colors.card,
     borderRadius: 12,
     padding: 16,
     // iOS Shadow
@@ -26,7 +38,7 @@ const commonStyles = StyleSheet.create<CommonStyles>({
     elevation: 5,
   },
   inputCard : {
-    backgroundColor: '#fff',
+    backgroundColor: colors.card,
     borderRadius: 12,
     padding: 10,
     // iOS Shadow
@@ -42,14 +54,14 @@ const commonStyles = StyleSheet.create<CommonStyles>({
   fullHorizontalLine : {
     borderBottomWidth: 1,
     width: '99%',
-    borderBottomColor: 'rgba(235, 235, 235, 1)',
+    borderBottomColor: colors.border,
     paddingTop: 5,
     marginBottom: 0,
   },
   horizontalLine: {
     borderBottomWidth: 1,
     width: '90%',
-    borderBottomColor: 'rgba(177, 177, 177, 1)',
+    borderBottomColor: colors.border,
     paddingTop: 5,
     marginBottom: 5,
   },
@@ -60,27 +72,30 @@ const commonStyles = StyleSheet.create<CommonStyles>({
   circle : {
     width: 35, 
     height: 35, 
-    backgroundColor: '#aeaeaeff', 
+    backgroundColor: colors.circleBackground, 
     borderWidth: 1,
     borderRadius: 20,
     display: 'flex', 
     justifyContent: 'center', 
     alignItems: 'center',
     margin:2,
-    borderColor: '#9e9e9eff', 
+    borderColor: colors.border, 
   }, 
     smallCircle : {
     width: 25, 
     height: 25, 
-    backgroundColor: '#aeaeaeff', 
+    backgroundColor: colors.circleBackground, 
     borderWidth: 1,
     borderRadius: 20,
     display: 'flex', 
     justifyContent: 'center', 
     alignItems: 'center',
     margin:2,
-    borderColor: '#9e9e9eff', 
+    borderColor: colors.border, 
   }, 
+  screenBackground : {
+    backgroundColor: colors.background,
+  }
 });
 
 export default commonStyles;

@@ -6,7 +6,7 @@ import {
   TouchableWithoutFeedback,
   StyleSheet,
 } from 'react-native';
-import commonStyles from '../../screens/style';
+import commonStyles from '../../theme/style';
 
 const SWITCH_WIDTH = 60;
 const SWITCH_HEIGHT = 35;
