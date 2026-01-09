@@ -1,8 +1,14 @@
 {
   "extends": "@react-native/typescript-config",
   "compilerOptions": {
+    "lib": ["ES2020", "DOM"],
     "types": ["jest"],
+    "typeRoots": [
+      "./node_modules/@types",
+      "./types"
+    ],
+    "skipLibCheck": true
   },
-  "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["**/node_modules", "**/Pods"]
+  "include": ["**/*.ts", "**/*.tsx", "src/screens/TimePicker.tsx"],
+  "exclude": ["node_modules", "Pods"]
 }
