@@ -9,7 +9,7 @@ import {
 import { useEffect, useState } from 'react';
 import { Alarm } from '../model/Alarm';
 import { loadAlarms, updateAlarmEnabled } from '../components/alarmStorage';
-import commonStyles from '../theme/style';
+import commonStyles, { colors } from '../theme/style';
 import AlarmTime from '../components/alarm/AlarmTime';
 import AlarmForm from '../components/alarm/AlarmForm';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -40,7 +40,7 @@ const AlarmList: React.FC = () => {
     <SafeAreaView style={[commonStyles.screenBackground, { flex: 1 }]} edges={['top']}>
       <View style={[styles.alarmList, ]}>
         <View style={styles.titleImageView}>
-          <Text style={styles.titleImageDesc}>
+          <Text style={[styles.titleImageDesc, commonStyles.inputCard]}>
             Set reminders for mealtime or medication.
           </Text>
           <Image
@@ -60,7 +60,7 @@ const AlarmList: React.FC = () => {
               onPress={setShowAlarmFormFn}
               style={{ width: '100%', alignItems: 'center' }}
             >
-              <View style={[commonStyles.card, styles.createAlarm, commonStyles.screenBackground]}>
+              <View style={[commonStyles.card, styles.createAlarm]}>
                 <View style={styles.addAlarmComp}>
                   <Image
                     source={require('../../assets/alarm/plus.png')}
@@ -100,6 +100,8 @@ export default AlarmList;
 const styles = StyleSheet.create({
   alarmList: {
     alignItems: 'center',
+    display: 'flex', 
+    flex: 1,
   },
 
   // create alarm -
@@ -112,9 +114,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderWidth: 1,
     margin: 10,
-    backgroundColor: '#bfd2ffff',
     borderRadius: 15,
-    borderColor: '#dbdbdbff',
+    borderColor: colors.border,
+    backgroundColor: colors.accent, 
   },
   addAlarmComp: {
     display: 'flex',
@@ -133,14 +135,16 @@ const styles = StyleSheet.create({
   },
   // Alarm list
   alarmListScroll: {
-    width: '100%',
-    alignItems: 'center',
+    display: 'flex',
     flex: 1,
+    alignItems: 'center',
     // marginBottom: 10,
   },
   alarmListStyle: {
     width: '90%',
-    paddingBottom: '110%',
+    display: 'flex', 
+    flex: 1,
+    // paddingBottom: '110%',
   },
 
   // heading view
@@ -159,7 +163,6 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 20,
     zIndex: 9,
-    backgroundColor: '#FFF',
     paddingLeft: 10,
     paddingRight: 10,
     padding: 5,

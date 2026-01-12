@@ -3,11 +3,12 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import HomeScreen from '../screens/HomeScreen';
-import { colors } from '../theme/color';
+import { colors } from '../theme/style';
 import { Image } from 'react-native';
 import AlarmList from '../screens/AlarmScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 import TimelineScreen from '../screens/TimelineScreen';
+import StatsScreen from '../screens/StatsScreen';
 
 const Tab = createBottomTabNavigator();
 

@@ -8,7 +8,7 @@ import { name as appName } from './app.json';
 import notifee, {
   EventType,
 } from '@notifee/react-native';
-import { getAlarmById } from './src/components/alarmStorage';
+import { getAlarmById, updateAlarmEnabled } from './src/components/alarmStorage';
 import { scheduleAlarm } from './src/components/AlarmQueue';
 
 import { enableScreens } from 'react-native-screens';
@@ -22,7 +22,10 @@ notifee.onBackgroundEvent(async ({ type, detail }) => {
     if (!alarmId) return;
     const alarm = await getAlarmById(alarmId);
     if (!alarm || !alarm.enabled) return;
-    if (alarm.repeat == 0) return;
+    if (alarm.repeat == 0) {
+      updateAlarmEnabled(alarmId, false);
+      return;
+    }
     await scheduleAlarm(alarm);
   }
 });
@@ -34,7 +37,10 @@ notifee.onForegroundEvent(async ({ type, detail }) => {
 
     const alarm = await getAlarmById(alarmId);
     if (!alarm || !alarm.enabled) return;
-    if (alarm.repeat == 0) return;
+    if (alarm.repeat == 0) {
+      updateAlarmEnabled(alarmId, false);
+      return;
+    }
     await scheduleAlarm(alarm);
   }
 });

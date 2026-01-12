@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
-import commonStyles from '../../theme/style';
+import commonStyles, { colors } from '../../theme/style';
 import AlarmToggle from './AlarmToggle';
 import { useState } from 'react';
 import AlarmDays from './AlarmDays';
@@ -135,7 +135,6 @@ const AlarmForm: React.FC<Prop> = ({
           style={[
             commonStyles.inputCard,
             styles.submitButton,
-            { backgroundColor: '#e1e1e1ff' },
           ]}
           onPress={setShowAlarmFormProp}
         >
@@ -149,7 +148,7 @@ const AlarmForm: React.FC<Prop> = ({
           ]}
           onPress={saveAlarm}
         >
-          <Text style={{ fontWeight: 600, fontSize: 16, color: '#FFFFFF' }}>
+          <Text style={{ fontWeight: 600, fontSize: 16, color: colors.textButton }}>
             Save
           </Text>
         </Pressable>
@@ -196,7 +195,7 @@ const styles = StyleSheet.create({
     height: 40,
     paddingLeft: 12,
     paddingRight: 12,
-    borderColor: '#ccccccff',
+    borderColor: colors.border,
     color: '#000',
     width: '70%',
     fontWeight: 400,
@@ -214,11 +213,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     width: '98%',
     alignItems: 'center',
-    borderColor: '#ccccccff',
+    borderColor: colors.border,
   },
   isSelected: {
-    backgroundColor: '#5880e6ff',
-    color: '#FFF',
+    backgroundColor: colors.buttonColor,
+    color: colors.textSecondary,
   },
   reminder: {
     fontSize: 12,
@@ -256,7 +255,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 10,
     marginBottom: 5,
-    borderColor: '#c7c7c7ff',
+    borderColor: colors.border,
   },
 });
 

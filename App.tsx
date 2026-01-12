@@ -15,13 +15,6 @@ function App() {
     init();
   }, []);
   return (
-    // <SafeAreaProvider>
-    //   <SafeAreaView style={[isDarkMode ? styles.dark : styles.light, { flex: 1}]}>
-    //     {/* <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-    //     <HomeScreen /> */}
-    //     <BottomTabs />
-    //   </SafeAreaView>
-    // </SafeAreaProvider>
     <SafeAreaProvider>
       <NavigationContainer>
         <BottomTabs />

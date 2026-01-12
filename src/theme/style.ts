@@ -8,7 +8,10 @@ export const colors = {
   border: '#E0E6ED',
   textPrimary: '#222222',
   textSecondary: '#666666',
+  textButton: '#FFFFFF',
   circleBackground: '#c8c8c8ff',
+  inactive: '#8a8a8aff',
+  buttonColor: '#1b61b3ff',
 };
 
 interface CommonStyles {
@@ -20,12 +23,13 @@ interface CommonStyles {
   circle: ViewStyle;
   smallCircle: ViewStyle;
   screenBackground: ViewStyle;
+  bottomCard: ViewStyle;
 }
 
 const commonStyles = StyleSheet.create<CommonStyles>({
   card: {
     backgroundColor: colors.card,
-    borderRadius: 12,
+    borderRadius: 15,
     padding: 16,
     // iOS Shadow
     shadowColor: '#000',
@@ -35,6 +39,18 @@ const commonStyles = StyleSheet.create<CommonStyles>({
     },
     shadowOpacity: 0.15,
     shadowRadius: 6,
+    elevation: 5,
+  },
+    bottomCard: {
+    backgroundColor: colors.card,
+    padding: 16,
+    // iOS Shadow
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.15,
     elevation: 5,
   },
   inputCard : {
