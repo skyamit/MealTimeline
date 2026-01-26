@@ -1,18 +1,52 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  Image,
-  Button,
-  Pressable,
-} from 'react-native';
+import React, { useCallback, useEffect, useState } from 'react';
+import { View, Text, StyleSheet, ScrollView, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import commonStyles, { colors } from '../theme/style';
+import { getTimelineFromStorage } from '../storage/TimelineStorage';
+import { TimelineItem } from '../model/TimelineItem';
+import { useFocusEffect } from '@react-navigation/native';
+import { AllMealType } from '../model/MealType';
+import MealDetails from './MealDetails';
 
 const HomeScreen: React.FC = () => {
+  const [timeline, setTimeline] = useState<TimelineItem[]>([]);
+  const [total, setTotal] = useState({
+    calories: 0,
+    fats: 0,
+    carbs: 0,
+    protein: 0,
+  });
+
+  useEffect(() => {
+    loadTimeline();
+  }, []);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadTimeline();
+    }, []),
+  );
+
+  const loadTimeline = async () => {
+    const data = await getTimelineFromStorage();
+    setTimeline(data);
+    await getAllSum();
+  };
+
+  const getAllSum = () => {
+    const sum = timeline.reduce(
+      (acc, data) => {
+        acc.calories += data.totalCalorie;
+        acc.carbs += data.totalCarbohydrate;
+        acc.fats += data.totalFats;
+        acc.protein += data.totalProtein;
+        return acc;
+      },
+      { calories: 0, fats: 0, carbs: 0, protein: 0 },
+    );
+    setTotal(sum);
+  };
+
   return (
     <SafeAreaView style={{ flex: 1 }} edges={['top']}>
       <View style={styles.container}>
@@ -50,7 +84,7 @@ const HomeScreen: React.FC = () => {
                     <Text
                       style={[{ color: colors.buttonColor, fontWeight: 600 }]}
                     >
-                      670
+                      {total.calories}
                     </Text>
                     <Text
                       style={[{ color: colors.textSecondary, fontWeight: 500 }]}
@@ -76,80 +110,14 @@ const HomeScreen: React.FC = () => {
           </View>
 
           <View style={styles.section}>
-            <View style={commonStyles.card}>
-              <View style={styles.sectionHeader}>
-                <Text style={styles.sectionTitle}>Breakfast</Text>
-                <Pressable>
-                  <Text style={styles.addButton}> + ADD</Text>
-                </Pressable>
-              </View>
-              <View style={styles.createSection}>
-                <View style={styles.createSectionHeader}>
-                  <Image
-                    source={require('../../assets/alarm/plus.png')}
-                    style={[{ width: 20, height: 20 }]}
-                  />
-                  <Text style={{ fontWeight: 500 }}>Log Breakfast</Text>
-                </View>
-                <View style={[commonStyles.horizontalLine, { width: 100 }]} />
-                <View>
-                  <Text style={{ color: colors.textSecondary }}>
-                    Add your morning meal
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <View style={commonStyles.card}>
-              <View style={[styles.sectionHeader]}>
-                <Text style={styles.sectionTitle}>Lunch</Text>
-                <Pressable>
-                  <Text style={styles.addButton}> + ADD</Text>
-                </Pressable>
-              </View>
-              <View style={styles.createSection}>
-                <View style={styles.createSectionHeader}>
-                  <Image
-                    source={require('../../assets/alarm/plus.png')}
-                    style={[{ width: 20, height: 20 }]}
-                  />
-                  <Text style={{ fontWeight: 500 }}>Log Lunch</Text>
-                </View>
-                <View style={[commonStyles.horizontalLine, { width: 100 }]} />
-                <View>
-                  <Text style={{ color: colors.textSecondary }}>
-                    Add your afternoon meal
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <View style={commonStyles.card}>
-              <View style={styles.sectionHeader}>
-                <Text style={styles.sectionTitle}>Dinner</Text>
-                <Pressable>
-                  <Text style={styles.addButton}> + ADD</Text>
-                </Pressable>
-              </View>
-              <View style={styles.createSection}>
-                <View style={styles.createSectionHeader}>
-                  <Image
-                    source={require('../../assets/alarm/plus.png')}
-                    style={[{ width: 20, height: 20 }]}
-                  />
-                  <Text style={{ fontWeight: 500 }}>Log Dinner</Text>
-                </View>
-                <View style={[commonStyles.horizontalLine, { width: 100 }]} />
-                <View>
-                  <Text style={{ color: colors.textSecondary }}>
-                    Add your evening meal
-                  </Text>
-                </View>
-              </View>
-            </View>
+            {AllMealType.map((data, index) => {
+              return (
+                <MealDetails key={index} meal={data} timelineItems={timeline} />
+              );
+            })}
           </View>
 
-          {/* Streak Card */}
           <View style={styles.streakCard}>
-            {/* <Ionicons name="flame" size={28} color="#F97316" /> */}
             <View style={{ marginLeft: 12 }}>
               <Text style={styles.streakValue}>18 Day Streak 🔥</Text>
               <Text style={styles.streakLabel}>

@@ -1,4 +1,4 @@
-import { StyleSheet, TextStyle, ViewStyle } from "react-native";
+import { StyleSheet, TextStyle, ViewStyle } from 'react-native';
 
 export const colors = {
   background: '#F5F8FB',
@@ -12,11 +12,14 @@ export const colors = {
   circleBackground: '#c8c8c8ff',
   inactive: '#8a8a8aff',
   buttonColor: '#1b61b3ff',
+  carbs: '#4A90E2',
+  protein: '#27AE60',
+  fats: '#F2994A',
 };
 
 interface CommonStyles {
   card: ViewStyle;
-  inputCard:ViewStyle;
+  inputCard: ViewStyle;
   horizontalLine: ViewStyle;
   fullHorizontalLine: ViewStyle;
   label: TextStyle;
@@ -24,9 +27,44 @@ interface CommonStyles {
   smallCircle: ViewStyle;
   screenBackground: ViewStyle;
   bottomCard: ViewStyle;
+  cardNoBackground: ViewStyle;
+  submit: ViewStyle;
+  submitText: TextStyle;
+  cancel: ViewStyle;
 }
 
 const commonStyles = StyleSheet.create<CommonStyles>({
+  submit: {
+    borderWidth: 1,
+    backgroundColor: colors.buttonColor,
+    borderColor: colors.border,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cancel: {
+    borderWidth: 1,
+    backgroundColor: colors.inactive,
+    borderColor: colors.border,
+    borderRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  submitText: {
+    color: colors.textButton,
+    fontWeight: 600,
+  },
+  cardNoBackground: {
+    backgroundColor: colors.card,
+    borderRadius: 13,
+    padding: 10,
+  },
   card: {
     backgroundColor: colors.card,
     borderRadius: 15,
@@ -41,7 +79,7 @@ const commonStyles = StyleSheet.create<CommonStyles>({
     shadowRadius: 6,
     elevation: 5,
   },
-    bottomCard: {
+  bottomCard: {
     backgroundColor: colors.card,
     padding: 16,
     // iOS Shadow
@@ -53,7 +91,7 @@ const commonStyles = StyleSheet.create<CommonStyles>({
     shadowOpacity: 0.15,
     elevation: 5,
   },
-  inputCard : {
+  inputCard: {
     backgroundColor: colors.card,
     borderRadius: 12,
     padding: 10,
@@ -63,11 +101,11 @@ const commonStyles = StyleSheet.create<CommonStyles>({
       width: 0,
       height: 2,
     },
-    shadowOpacity: 0.10,
+    shadowOpacity: 0.1,
     shadowRadius: 6,
     elevation: 2,
   },
-  fullHorizontalLine : {
+  fullHorizontalLine: {
     borderBottomWidth: 1,
     width: '99%',
     borderBottomColor: colors.border,
@@ -81,37 +119,37 @@ const commonStyles = StyleSheet.create<CommonStyles>({
     paddingTop: 5,
     marginBottom: 5,
   },
-  label : {
-    fontSize: 14, 
-    fontWeight: 500
-  }, 
-  circle : {
-    width: 35, 
-    height: 35, 
-    backgroundColor: colors.circleBackground, 
+  label: {
+    fontSize: 14,
+    fontWeight: 500,
+  },
+  circle: {
+    width: 35,
+    height: 35,
+    backgroundColor: colors.circleBackground,
     borderWidth: 1,
     borderRadius: 20,
-    display: 'flex', 
-    justifyContent: 'center', 
+    display: 'flex',
+    justifyContent: 'center',
     alignItems: 'center',
-    margin:2,
-    borderColor: colors.border, 
-  }, 
-    smallCircle : {
-    width: 25, 
-    height: 25, 
-    backgroundColor: colors.circleBackground, 
+    margin: 2,
+    borderColor: colors.border,
+  },
+  smallCircle: {
+    width: 25,
+    height: 25,
+    backgroundColor: colors.circleBackground,
     borderWidth: 1,
     borderRadius: 20,
-    display: 'flex', 
-    justifyContent: 'center', 
+    display: 'flex',
+    justifyContent: 'center',
     alignItems: 'center',
-    margin:2,
-    borderColor: colors.border, 
-  }, 
-  screenBackground : {
+    margin: 2,
+    borderColor: colors.border,
+  },
+  screenBackground: {
     backgroundColor: colors.background,
-  }
+  },
 });
 
 export default commonStyles;

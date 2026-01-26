@@ -8,7 +8,7 @@ import { Alert, Platform } from 'react-native';
 import {
   loadAlarms,
   saveAlarms,
-} from '../components/alarmStorage';
+} from './alarmStorage';
 
 export async function addAlarm(alarm: Alarm) {
   const time = getNextAlarmDate(alarm);

@@ -3,9 +3,9 @@ import { View, Text, StyleSheet, Image, Pressable, Alert } from 'react-native';
 import { Alarm } from '../../model/Alarm';
 import AlarmToggle from './AlarmToggle';
 import commonStyles from '../../theme/style';
-import { cancelAlarmNotification, getNextAlarmDate } from '../AlarmQueue';
-import { removeAlarmFromStorage } from '../alarmStorage';
-import EntityConstants from '../constants/EntityConstants';
+import { cancelAlarmNotification, getNextAlarmDate } from '../../storage/AlarmQueue';
+import { removeAlarmFromStorage } from '../../storage/alarmStorage';
+import EntityConstants from '../../constants/EntityConstants';
 import AlarmDayView from './AlarmDayView';
 
 type Prop = {

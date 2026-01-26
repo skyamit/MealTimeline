@@ -3,7 +3,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import HomeScreen from './src/screens/HomeScreen';
 import { useEffect } from 'react';
 import { setupNotifications } from './src/services/notificationSteup';
-import BottomTabs from './src/components/BottomNavigation';
+import BottomTabs from './src/components/navigations/BottomNavigation';
 import { NavigationContainer } from '@react-navigation/native';
 
 function App() {

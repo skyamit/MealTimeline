@@ -8,8 +8,8 @@ import { name as appName } from './app.json';
 import notifee, {
   EventType,
 } from '@notifee/react-native';
-import { getAlarmById, updateAlarmEnabled } from './src/components/alarmStorage';
-import { scheduleAlarm } from './src/components/AlarmQueue';
+import { getAlarmById, updateAlarmEnabled } from './src/storage/alarmStorage';
+import { scheduleAlarm } from './src/storage/AlarmQueue';
 
 import { enableScreens } from 'react-native-screens';
 

@@ -1,176 +1,224 @@
-// import { Text, View } from "react-native";
-// import { SafeAreaView } from "react-native-safe-area-context";
-// import commonStyles from "../theme/style";
-
-// const TimelineScreen: React.FC = () => {
-//   return (
-//     <SafeAreaView style={[commonStyles.screenBackground, {flex : 1}]} edges={['top']}>
-//         <View style={[]}>
-//         </View> 
-//     </SafeAreaView>
-//   );
-// }
-
-// export default TimelineScreen;
-
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from 'react-native';
-// import { Ionicons } from '@expo/vector-icons';
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
+import commonStyles, { colors } from '../theme/style';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
-const TimelineScreen: React.FC = () => {
-  return (
-    <View style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Meal Timeline</Text>
-        <Text style={styles.headerSubtitle}>Your daily food routine</Text>
-      </View>
+type MealType = 'Breakfast' | 'Lunch' | 'Snack' | 'Dinner';
 
-      {/* Timeline */}
-      <ScrollView contentContainerStyle={styles.timelineContainer}>
-        <TimelineCard time="06:30 AM" title="Wake Up" icon="sunny" status="done" />
-        <TimelineCard time="08:30 AM" title="Breakfast" icon="restaurant" status="upcoming" />
-        <TimelineCard time="11:30 AM" title="Fruits / Snack" icon="nutrition" status="pending" />
-        <TimelineCard time="01:30 PM" title="Lunch" icon="fast-food" status="pending" />
-        <TimelineCard time="05:30 PM" title="Evening Snack" icon="cafe" status="pending" />
-        <TimelineCard time="08:30 PM" title="Dinner" icon="restaurant" status="pending" />
-        <TimelineCard time="10:30 PM" title="Sleep" icon="moon" status="pending" />
-      </ScrollView>
-
-      {/* Floating Action Button */}
-      <TouchableOpacity style={styles.fab}>
-        {/* <Ionicons name="add" size={28} color="#fff" /> */}
-      </TouchableOpacity>
-    </View>
-  );
-};
-
-const TimelineCard = ({
-  time,
-  title,
-  icon,
-  status,
-}: {
+interface MealItem {
+  id: string;
+  type: MealType;
   time: string;
   title: string;
-  icon: any;
-  status: 'done' | 'upcoming' | 'pending';
-}) => {
-  const getStatusColor = () => {
-    if (status === 'done') return '#16A34A';
-    if (status === 'upcoming') return '#4F46E5';
-    return '#9CA3AF';
+  calories: number;
+  image?: string;
+}
+
+const MEALS: MealItem[] = [
+  {
+    id: '1',
+    type: 'Breakfast',
+    time: '8:00 AM',
+    title: 'Oatmeal with Berries',
+    calories: 250,
+    image: 'https://via.placeholder.com/60',
+  },
+  {
+    id: '2',
+    type: 'Lunch',
+    time: '12:30 PM',
+    title: 'Grilled Chicken Salad',
+    calories: 420,
+    image: 'https://via.placeholder.com/60',
+  },
+  {
+    id: '3',
+    type: 'Snack',
+    time: '4:00 PM',
+    title: 'Apple & Almonds',
+    calories: 150,
+    image: 'https://via.placeholder.com/60',
+  },
+];
+
+const MealTimelineScreen: React.FC = () => {
+  const renderItem = ({ item }: { item: MealItem }) => {
+    return (
+      <View style={styles.timelineRow}>
+        <View style={styles.timeColumn}>
+          <Text style={styles.timeText}>{item.time}</Text>
+          <View style={styles.dot} />
+          <View style={styles.verticalLine} />
+        </View>
+
+        <View style={[commonStyles.card, styles.card]}>
+          <View style={styles.cardContent}>
+            {item.image && (
+              <Image source={{ uri: item.image }} style={styles.image} />
+            )}
+
+            <View style={styles.textContainer}>
+              <Text style={styles.mealType}>{item.type}</Text>
+              <Text style={styles.mealTitle}>{item.title}</Text>
+              <Text style={styles.calories}>{item.calories} kcal</Text>
+            </View>
+          </View>
+        </View>
+      </View>
+    );
   };
 
   return (
-    <View style={styles.timelineCard}>
-      <View style={styles.timeColumn}>
-        <Text style={styles.timeText}>{time}</Text>
-        <View style={[styles.verticalLine, { backgroundColor: getStatusColor() }]} />
-      </View>
-
-      <View style={styles.contentCard}>
-        <View style={[styles.iconWrapper, { backgroundColor: getStatusColor() + '20' }]}>
+    <SafeAreaView style={{ flex: 1 }} edges={['top']}>
+      <View style={styles.container}>
+        <View style={[styles.header]}>
+          <Text style={[styles.username]}>Meal Timeline</Text>
+          <Text style={[styles.greeting]}>Today</Text>
         </View>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.mealTitle}>{title}</Text>
-          <Text style={styles.mealStatus}>{status.toUpperCase()}</Text>
-        </View>
+        <ScrollView>
+          <View style={styles.meals}>
+            <FlatList
+              data={MEALS}
+              keyExtractor={item => item.id}
+              renderItem={renderItem}
+              contentContainerStyle={styles.listContent}
+              showsVerticalScrollIndicator={false}
+            />
+          </View>
+        </ScrollView>
+        <TouchableOpacity style={styles.fab}>
+          <Text style={styles.fabText}>＋</Text>
+        </TouchableOpacity>
       </View>
-    </View>
+    </SafeAreaView>
   );
 };
 
-export default TimelineScreen;
+export default MealTimelineScreen;
 
 const styles = StyleSheet.create({
   container: {
+    display: 'flex',
     flex: 1,
-    backgroundColor: '#F6F7FB',
+    backgroundColor: colors.background,
   },
   header: {
-    backgroundColor: '#4F46E5',
-    padding: 20,
-    paddingBottom: 28,
-    borderBottomLeftRadius: 28,
-    borderBottomRightRadius: 28,
+    padding: 10,
+    paddingLeft: 15,
+    paddingBottom: 10,
+    borderBottomWidth: 1,
+    backgroundColor: colors.card,
+    borderBottomColor: colors.border,
   },
-  headerTitle: {
-    color: '#fff',
-    fontSize: 20,
+  greeting: {
+    color: colors.textSecondary,
+    fontSize: 14,
+    fontWeight: 500,
+  },
+  username: {
+    color: colors.textPrimary,
+    fontSize: 22,
     fontWeight: '700',
-  },
-  headerSubtitle: {
-    color: '#E0E7FF',
-    fontSize: 13,
     marginTop: 4,
   },
-  timelineContainer: {
-    padding: 16,
+
+  meals: {
+    marginTop: 10,
+  },
+  listContent: {
+    paddingHorizontal: 12,
     paddingBottom: 100,
   },
-  timelineCard: {
+
+  timelineRow: {
     flexDirection: 'row',
-    marginBottom: 16,
+    marginBottom: 20,
   },
+
   timeColumn: {
     width: 70,
     alignItems: 'center',
   },
   timeText: {
     fontSize: 12,
-    fontWeight: '600',
-    color: '#374151',
+    color: '#555',
     marginBottom: 6,
   },
-  verticalLine: {
-    width: 2,
-    flex: 1,
-    borderRadius: 1,
+  dot: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+    backgroundColor: '#4A90E2',
+    marginBottom: 4,
   },
-  contentCard: {
+  verticalLine: {
     flex: 1,
+    width: 2,
+    backgroundColor: '#E0E6ED',
+  },
+
+  card: {
+    flex: 1,
+    marginLeft: 8,
+  },
+
+  cardContent: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
-    padding: 14,
-    borderRadius: 18,
-    shadowColor: '#000',
-    shadowOpacity: 0.08,
-    shadowRadius: 8,
-    elevation: 4,
   },
-  iconWrapper: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
+
+  image: {
+    width: 56,
+    height: 56,
+    borderRadius: 8,
     marginRight: 12,
+    backgroundColor: '#EEE',
+  },
+
+  textContainer: {
+    flex: 1,
+  },
+
+  mealType: {
+    fontSize: 12,
+    color: '#4A90E2',
+    fontWeight: '600',
   },
   mealTitle: {
-    fontSize: 15,
+    fontSize: 16,
     fontWeight: '600',
-    color: '#111827',
-  },
-  mealStatus: {
-    fontSize: 11,
+    color: '#222',
     marginTop: 2,
-    color: '#6B7280',
   },
+  calories: {
+    fontSize: 13,
+    color: '#777',
+    marginTop: 4,
+  },
+
   fab: {
     position: 'absolute',
     right: 20,
-    bottom: 24,
+    bottom: 30,
     width: 56,
     height: 56,
     borderRadius: 28,
-    backgroundColor: '#4F46E5',
-    alignItems: 'center',
+    backgroundColor: '#4A90E2',
     justifyContent: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 10,
+    alignItems: 'center',
     elevation: 6,
+  },
+  fabText: {
+    color: '#fff',
+    fontSize: 28,
+    marginTop: -2,
   },
 });

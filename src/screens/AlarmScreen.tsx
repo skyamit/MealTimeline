@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import { useEffect, useState } from 'react';
 import { Alarm } from '../model/Alarm';
-import { loadAlarms, updateAlarmEnabled } from '../components/alarmStorage';
+import { loadAlarms, updateAlarmEnabled } from '../storage/alarmStorage';
 import commonStyles, { colors } from '../theme/style';
 import AlarmTime from '../components/alarm/AlarmTime';
 import AlarmForm from '../components/alarm/AlarmForm';

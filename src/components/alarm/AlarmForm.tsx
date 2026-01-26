@@ -5,7 +5,7 @@ import { useState } from 'react';
 import AlarmDays from './AlarmDays';
 import TimeSegmentPicker from './TimeSegmentPicker';
 import { Alarm } from '../../model/Alarm';
-import { addAlarm } from '../AlarmQueue';
+import { addAlarm } from '../../storage/AlarmQueue';
 
 type Prop = {
   setShowAlarmFormProp: () => void;

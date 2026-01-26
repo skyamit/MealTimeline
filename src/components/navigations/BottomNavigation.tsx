@@ -2,35 +2,36 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import HomeScreen from '../screens/HomeScreen';
-import { colors } from '../theme/style';
+import HomeScreen from '../../screens/HomeScreen';
+import { colors } from '../../theme/style';
 import { Image } from 'react-native';
-import AlarmList from '../screens/AlarmScreen';
-import ProfileScreen from '../screens/ProfileScreen';
-import TimelineScreen from '../screens/TimelineScreen';
-import StatsScreen from '../screens/StatsScreen';
+import AlarmList from '../../screens/AlarmScreen';
+import ProfileScreen from '../../screens/ProfileScreen';
+import TimelineScreen from '../../screens/TimelineScreen';
+import StatsScreen from '../../screens/StatsScreen';
+import AddMealScreen from '../../screens/AddMealScreen';
 
 const Tab = createBottomTabNavigator();
 
 export const bottomNavIcons = {
   timeline: {
-    active: require('../../assets/bottomNav/timelineActive.png'),
-    inactive: require('../../assets/bottomNav/timelineInActive.png'),
+    active: require('../../../assets/bottomNav/timelineActive.png'),
+    inactive: require('../../../assets/bottomNav/timelineInActive.png'),
   },
   home: {
-    active: require('../../assets/bottomNav/homeActive.png'),
-    inactive: require('../../assets/bottomNav/homeInActive.png'),
+    active: require('../../../assets/bottomNav/homeActive.png'),
+    inactive: require('../../../assets/bottomNav/homeInActive.png'),
   },
   alarm: {
-    active: require('../../assets/bottomNav/alarmActive.png'),
-    inactive: require('../../assets/bottomNav/alarmInActive.png'),
+    active: require('../../../assets/bottomNav/alarmActive.png'),
+    inactive: require('../../../assets/bottomNav/alarmInActive.png'),
   },
   profile: {
-    active: require('../../assets/bottomNav/userActive.png'),
-    inactive: require('../../assets/bottomNav/userInActive.png'),
+    active: require('../../../assets/bottomNav/userActive.png'),
+    inactive: require('../../../assets/bottomNav/userInActive.png'),
   },
   add: {
-    active: require('../../assets/alarm/plus.png'),
+    active: require('../../../assets/alarm/plus.png'),
   },
 };
 
@@ -101,7 +102,7 @@ const BottomTabs = () => {
     >
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Timeline" component={TimelineScreen} />
-      <Tab.Screen name="Add Meal" component={TimelineScreen} />
+      <Tab.Screen name="Add Meal" component={AddMealScreen} />
       <Tab.Screen name="Alarm" component={AlarmList} />
       <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
