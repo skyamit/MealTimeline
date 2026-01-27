@@ -18,7 +18,6 @@ export const getTimelineFromStorage = async () => {
 const saveTimelineToStorage = async (timeline: TimelineItem[]) => {
   const payload: TimelineStorage = { timeline };
   AsyncStorage.setItem(TIMELINE_KEY, JSON.stringify(payload));
-  Alert.alert('Meal added!');
 };
 
 export const addOrUpdateMeal = async (meal: TimelineItem) => {
@@ -30,6 +29,7 @@ export const addOrUpdateMeal = async (meal: TimelineItem) => {
     timeline.push(meal);
   }
   saveTimelineToStorage(timeline);
+  Alert.alert('Meal added!');
 };
 
 export const editMeal = async (
@@ -47,10 +47,9 @@ export const editMeal = async (
 
 export const deleteMeal = async (mealType: string) => {
   const timeline = await getTimelineFromStorage();
-
   const updatedTimeline = timeline.filter(item => item.mealType !== mealType);
-
   saveTimelineToStorage(updatedTimeline);
+  Alert.alert("Meal deleted");
 };
 
 export const deleteFoodFromMeal = async (mealType: string, foodId: string) => {

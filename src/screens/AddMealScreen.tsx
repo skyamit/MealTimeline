@@ -27,6 +27,12 @@ const AddMealSheet: React.FC = () => {
     [selectedFoodIds],
   );
 
+  const resetMealState = () => {
+    setMealType('lunch');
+    setQuantities({});
+    setSelectedFoodIds([]);
+  };
+
   const total = useMemo(() => {
     return selectedFoods.reduce(
       (acc, food) => {
@@ -49,17 +55,30 @@ const AddMealSheet: React.FC = () => {
   }, [selectedFoods, quantities]);
 
   const addMeal = () => {
-    Alert.alert("Add meal called")
+    if (selectedFoodIds.length === 0) {
+      Alert.alert(
+        'No food selected',
+        'Please select at least one food before saving the meal.',
+      );
+      return;
+    }
+
+    const foodsWithQuantity = selectedFoods.map(food => ({
+      ...food,
+      qty: quantities[food.id] ?? 1,
+    }));
+
     const item = {
-        mealType: mealType,
-        totalCalorie: total.calories,
-        totalCarbohydrate: total.carbs,
-        totalFats: total.fat,
-        totalProtein: total.protein,
-        foods: selectedFoods
+      mealType: mealType,
+      totalCalorie: total.calories,
+      totalCarbohydrate: total.carbs,
+      totalFats: total.fat,
+      totalProtein: total.protein,
+      foods: foodsWithQuantity,
     };
     addOrUpdateMeal(item);
-  }
+    resetMealState();
+  };
 
   return (
     <SafeAreaView
@@ -118,6 +137,7 @@ const AddMealSheet: React.FC = () => {
         </View>
         <View style={styles.footer}>
           <TouchableOpacity
+            onPress={resetMealState}
             style={[commonStyles.cancel, { width: '45%', height: 40 }]}
           >
             <Text style={[commonStyles.submitText]}>Clear</Text>

@@ -1,24 +1,28 @@
-import { View, Text, Image, Pressable, StyleSheet } from 'react-native';
+import { View, Text, Image, Pressable, StyleSheet, Alert } from 'react-native';
 import commonStyles, { colors } from '../theme/style';
 import { TimelineItem } from '../model/TimelineItem';
 import CreateMeal from '../components/foodPicker/CreateMeal';
 import MealData from '../components/foodPicker/MealData';
+import { deleteMeal } from '../storage/TimelineStorage';
+import { capitalizeFirst } from '../constants/Utils';
 
 type Prop = {
-  meal: String;
+  meal: string;
   timelineItems: TimelineItem[];
 };
 const MealDetails = ({ meal, timelineItems }: Prop) => {
   const mealTypeTimeline = timelineItems.filter(
     item => item.mealType === meal,
   );
-
+const deleteAllMeal = async () => {
+    await deleteMeal(meal);
+}
   return (
     <View style={commonStyles.card}>
       <View style={styles.sectionHeader}>
-        <Text style={styles.sectionTitle}>{meal.toUpperCase()}</Text>
-        <Pressable onPress={() => {}}>
-          <Text style={styles.addButton}> + ADD</Text>
+        <Text style={styles.sectionTitle}>{capitalizeFirst(meal)}</Text>
+        <Pressable onPress={deleteAllMeal}>
+          <Text style={styles.addButton}>Delete</Text>
         </Pressable>
       </View>
       {mealTypeTimeline.length == 0 && (
@@ -26,9 +30,9 @@ const MealDetails = ({ meal, timelineItems }: Prop) => {
       )}
       {
         mealTypeTimeline.length > 0 && (
-            mealTypeTimeline.map((data) => {
+            mealTypeTimeline.map((data, index) => {
                 return (
-                    <MealData meal={data} />
+                    <MealData key={index} meal={data} />
                 );
             })
         )

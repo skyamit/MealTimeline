@@ -18,4 +18,5 @@ export interface FoodItem {
   };
   diet: DietType[];
   meal_type: MealType[];
+  qty?:number;
 }

@@ -12,7 +12,7 @@ const MealData = ({ meal }: Prop) => {
     <View style={[styles.card, { marginTop: 5 }]}>
       {meal.foods.map(food => (
         <View key={food.id} style={styles.foodRow}>
-          <Text style={styles.foodName}>{food.name}{' '} x {' '}{food.serving.quantity}</Text>
+          <Text style={styles.foodName}>{food.name}{' '} x {' '}{food.qty ? food.qty : 1}</Text>
           <Text style={styles.foodMeta}>{food.calories} kcal</Text>
         </View>
       ))}

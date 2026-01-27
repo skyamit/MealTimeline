@@ -1,4 +1,4 @@
-import { FoodItem } from "../model/FoodItem";
+import { FoodItem } from '../model/FoodItem';
 
 export const FOODS: FoodItem[] = [
   {
@@ -20,6 +20,20 @@ export const FOODS: FoodItem[] = [
     macros: { carbs_g: 15, protein_g: 3, fat_g: 4 },
     diet: ['veg'],
     meal_type: ['lunch', 'dinner'],
+  },
+  {
+    id: 'puri',
+    name: 'Puri',
+    category: 'bread',
+    serving: { quantity: 1, unit: 'piece', weight_g: 40 },
+    calories: 120,
+    macros: {
+      carbs_g: 15,
+      protein_g: 3,
+      fat_g: 6,
+    },
+    diet: ['veg'],
+    meal_type: ['breakfast', 'lunch', 'dinner'],
   },
   {
     id: 'plain_paratha',

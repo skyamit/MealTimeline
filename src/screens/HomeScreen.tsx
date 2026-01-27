@@ -30,11 +30,11 @@ const HomeScreen: React.FC = () => {
   const loadTimeline = async () => {
     const data = await getTimelineFromStorage();
     setTimeline(data);
-    await getAllSum();
+    getAllSum(data);
   };
 
-  const getAllSum = () => {
-    const sum = timeline.reduce(
+  const getAllSum = (tt:TimelineItem[]) => {
+    const sum = tt.reduce(
       (acc, data) => {
         acc.calories += data.totalCalorie;
         acc.carbs += data.totalCarbohydrate;

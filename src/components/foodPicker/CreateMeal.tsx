@@ -1,8 +1,9 @@
 import { View, Image, Text, StyleSheet } from "react-native";
 import commonStyles, { colors } from "../../theme/style";
+import { capitalizeFirst } from "../../constants/Utils";
 
 type Prop = {
-    mealType : String;
+    mealType : string;
 }
 const CreateMeal = ({mealType}: Prop) => {
     return (
@@ -12,7 +13,7 @@ const CreateMeal = ({mealType}: Prop) => {
               source={require('../../../assets/alarm/plus.png')}
               style={[{ width: 20, height: 20 }]}
             />
-            <Text style={{ fontWeight: 500 }}>Log {mealType.toUpperCase()}</Text>
+            <Text style={{ fontWeight: 500 }}>Log {capitalizeFirst(mealType)}</Text>
           </View>
           <View style={[commonStyles.horizontalLine, { width: 100 }]} />
           <View>
